@@ -15,7 +15,6 @@ class TeebpdServiceProvider extends ServiceProvider
     ];
 
     protected $publishData = [
-        'config' => ['config_path','/'],
         'assets' => ['public_path','teebpd'],
         'views' => ['resource_path','views/milestone/teebpd'],
     ];
@@ -43,7 +42,7 @@ class TeebpdServiceProvider extends ServiceProvider
         }
 
         $this->publishes($publishDataArray);
-        $this->publishes($publishDataArray,'update');
+        $this->publishes($publishDataArray,'teebpd-update');
     }
 
     /**
