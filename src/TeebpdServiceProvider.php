@@ -10,7 +10,7 @@ class TeebpdServiceProvider extends ServiceProvider
     protected $bootDataDir = __DIR__ . '/../';
     protected $bootData = [
         'loadRoutesFrom' => 'routes/web.php',
-        'loadViewsFrom' => ['views','Teebpd'],
+        'loadViewsFrom' => ['views','teebpd'],
         'loadMigrationsFrom' => 'migrations',
     ];
 
@@ -53,6 +53,8 @@ class TeebpdServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/filesystems.php', 'filesystems.disks'
+        );
     }
 }
