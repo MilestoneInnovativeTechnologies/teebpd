@@ -17,7 +17,7 @@ class Wishlist extends Model
     }
 
     public function Visitors(){
-        return $this->belongsToMany(Visitor::class,'visitor_wishlists', 'wishlist','visitor')->with(['viewed','status'])->withTimestamps();
+        return $this->belongsToMany(Visitor::class,'visitor_wishlists', 'wishlist','visitor')->withPivot(['viewed','status'])->withTimestamps();
     }
 
     public function Notes(){
