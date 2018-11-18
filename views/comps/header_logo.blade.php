@@ -1,0 +1,1 @@
+<div class="wpbingoLogo" style="margin-top: 24px;"><a href="{{ route('home') }}">{!! config('appframe.brand')?'<img src="'.config('appframe.brand').'" height="32" alt="'.config('appframe.brand_text').'">':config('appframe.brand_text') !!}</a></div>
