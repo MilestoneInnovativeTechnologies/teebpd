@@ -1,0 +1,27 @@
+{
+    "name": "milestone/teebpd",
+    "description": "Teeb Emirates - Product Demonstration",
+    "type": "laravel-package",
+    "require": {
+        "milestone/appframe": "^0.8.0",
+        "laravel/laravel": "^5.7"
+    },
+    "authors": [
+        {
+            "name": "Milestone Innovative Technologies",
+            "email": "info@milestoneit.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Milestone\\Teebpd\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Milestone\\Teebpd\\TeebpdServiceProvider"
+            ]
+        }
+    }
+}
