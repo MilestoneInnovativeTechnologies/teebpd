@@ -17,7 +17,7 @@ class Product extends Model
     }
 
     public function Images(){
-        return $this->hasMany(ProductImage::class, 'product');
+        return $this->hasMany(ProductImage::class, 'product')->where('status','Active');
     }
 
     public function Wishlists(){
