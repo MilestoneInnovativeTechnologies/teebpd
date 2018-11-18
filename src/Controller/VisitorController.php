@@ -9,19 +9,16 @@ use Illuminate\Support\Facades\Cookie;
 class VisitorController extends Controller
 {
     public function store(){
-        if(request('set-visitor') === 'Submit'){
-            $email = request('email'); $number = request('number'); $name = request('name');
-            $visitor = $this->AddOrGetVisitor($email,$name,$number);
-            $vid = $visitor->id;
-            Cookie::queue(Cookie::make('__teeb_visitor',$vid,30*24*60,'/'));
-        }
-        return back();
+        $email = request('email'); $number = request('number'); $name = request('name');
+        $visitor = $this->AddOrGetVisitor($email,$name,$number);
+        $vid = $visitor->id;
+        return back()->cookie('__teeb_visitor',$vid,30*24*60,'/');
     }
     public function clear(){
         $cclr = null;
         if(request('_clu') && request('_clu') === Cookie::get('__teeb_visitor')){
-            Cookie::queue(Cookie::make('__teeb_visitor',request('_clu'),-1,'/'));
-            $cclr = true;
+            //Cookie::queue(Cookie::make('__teeb_visitor',request('_clu'),-1,'/'));
+            $cclr = true; return back()->with(compact('cclr'))->cookie('__teeb_visitor',request('_clu'),-1,'/');
         }
         return back()->with(compact('cclr'));
     }
@@ -34,7 +31,7 @@ class VisitorController extends Controller
         if($email) $visitor = Visitor::where('email',$email)->first();
         if(!$visitor && $number) $visitor = Visitor::where('number',$number)->first();
         if(!$visitor) $visitor = new Visitor;
-        $visitor->forceFill(array_filter(compact('name','email','mobile_number')))->save();
+        $visitor->forceFill(array_filter(compact('name','email','number')))->save();
         return $visitor;
     }
 }

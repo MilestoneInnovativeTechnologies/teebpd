@@ -7,8 +7,8 @@ use Milestone\Teebpd\Model\Product;
 
 class ProductController extends Controller
 {
-    public function detail(Product $id){
-        $Product = $id->load(['Brand','Category','ProductImages']);
-        return view('product_details',compact('Product'));
+    public function detail($id){
+        $Product = Product::find($id)->load(['Brand','Category','Images']);
+        return view('teebpd::product_details',compact('Product'));
     }
 }

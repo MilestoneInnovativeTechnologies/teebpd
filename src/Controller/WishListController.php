@@ -15,7 +15,7 @@ class WishListController extends Controller
     public function page(){
         $vid = Cookie::get('__teeb_visitor');
         $visitor = ($vid) ? Visitor::find($vid) : null;
-        return view('wishlist')->with(compact('visitor'));
+        return view('teebpd::wishlist')->with(compact('visitor'));
     }
     public function store(Request $request){
         if($request->get('create-wishlist') === 'Add WishList'){
@@ -36,12 +36,13 @@ class WishListController extends Controller
         session()->flash('info','Product added to Wish List.');
         return back();
     }
-    public function detail(Wishlist $id){
+    public function detail($id){
         $visitor = (new VisitorController)->getCurrentVisitor(); if(!$visitor) return redirect()->route('home');//'Wishlist cannot be displayed';
-        $Author = $id->author == $visitor->id;
-        if(!$Author && !$id->Visitors->where(['id' => $visitor->id, 'status' => 'Active'])->count()) return 'Wishlist cannot be displayed';
-        $WishList = $id->load(['Notes.Author','Author','Visitors','Vendor','Items' => function($Q){ $Q->with(['Product' => function($Q){ $Q->with(['Brand','Category','Images']); },'Notes.Author','Added','Removed']); }]);
-        return view('wishlist_details',compact('WishList','Author','visitor'));
+        $WishList = Wishlist::find($id);
+        $Author = $WishList->author == $visitor->id;
+        if(!$Author && !$WishList->Visitors->where(['id' => $visitor->id, 'status' => 'Active'])->count()) return 'Wishlist cannot be displayed';
+        $WishList = $WishList->load(['Notes.Author','Author','Visitors','Vendor','Items' => function($Q){ $Q->with(['Product' => function($Q){ $Q->with(['Brand','Category','Images']); },'Notes.Author','Added','Removed']); }]);
+        return view('teebpd::wishlist_details',compact('WishList','Author','visitor'));
     }
     public function note(Request $request){
         if(trim($request->note) === "") return back();
