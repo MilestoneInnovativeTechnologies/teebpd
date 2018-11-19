@@ -14,14 +14,14 @@ class CreateProductImagesTable extends Migration
     public function up()
     {
         Schema::create('product_images', function (Blueprint $table) {
-			$table->increments('id');
-			$table->string('name', 64)->index();
-			$table->unsignedInteger('product')->nullable()->index();
-			$table->string('image', 128)->nullable();
-			$table->enum('default', ['Yes','No'])->default('Yes')->index();
-			$table->enum('status', ['Active','Inactive'])->default('Active')->index();
-			$table->timestamps();
-			$table->foreign('product')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
+            $table->increments('id');
+            $table->string('name', 64)->nullable();
+            $table->unsignedInteger('product')->nullable()->index();
+            $table->string('image', 128)->nullable();
+            $table->enum('default', ['Yes','No'])->default('Yes')->index();
+            $table->enum('status', ['Active','Inactive'])->default('Active')->index();
+            $table->timestamps();
+            $table->foreign('product')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
