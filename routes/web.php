@@ -17,4 +17,5 @@ Route::group([
     Route::get('wishlist_share_alter', 'WishListController@alter')->name('share.alter');
     Route::post('wishlist_product_alter', 'WishListController@edit')->name('product.alter');
     Route::post('wishlistproduct_note', 'WishListProductController@note')->name('wlp.note');
+    Route::get('in/{code}', 'WishListController@in')->name('share.in');
 });
