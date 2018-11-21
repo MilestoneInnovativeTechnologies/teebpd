@@ -1,7 +1,7 @@
 @extends('teebpd::layouts.demonstration')
 
 @php
-    $Products = Milestone\Teebpd\Model\Product::with(['Images'])->where(['type' => 'Public','status' => 'Active']);
+    $Products = Milestone\Teebpd\Model\Product::with(['Images','Category','Brand'])->where(['type' => 'Public','status' => 'Active']);
     if(!empty(request('s'))){
         $like = "%" . request('s') . "%";
         $Products->where(function($Q)use($like){
@@ -24,7 +24,6 @@
                 <div class="woocommerce-result-count hidden-sm hidden-xs pull-left">Showing {{ $Products->firstItem() }}–{{ $Products->lastItem() }} of {{ $Products->total() }} item(s)</div>
                 <nav class="woocommerce-pagination pull-right">
                     @if(empty(request('s'))) {{ $Products->links() }} @else {{ $Products->appends(['s' => request('s')])->links() }} @endif
-
                 </nav>
             </div>
             @if(  $Products->isEmpty())
