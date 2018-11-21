@@ -7,6 +7,7 @@ Route::group([
     Route::get('product/{id}', 'ProductController@detail')->name('product.detail');
     Route::get('wishlist', 'WishListController@page')->name('wishlist');
     Route::get('wishlist/{id}', 'WishListController@detail')->name('wishlist.detail');
+    Route::get('wishlist/delete/{id}', 'WishListController@delete')->name('wishlist.delete');
     Route::post('visitor_store', 'VisitorController@store')->name('store.visitor');
     Route::post('visitor_clear', 'VisitorController@clear')->name('clear.visitor');
     Route::post('wishlist', 'WishListController@store');
