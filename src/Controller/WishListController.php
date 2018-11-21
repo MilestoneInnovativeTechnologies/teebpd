@@ -4,11 +4,12 @@ namespace Milestone\Teebpd\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Mail;
 use Milestone\Teebpd\Model\Visitor;
 use Milestone\Teebpd\Model\Wishlist;
 use Milestone\Teebpd\Model\WishlistNote;
-use Milestone\Teebpd\Model\VendorWishlist;
 use Milestone\Teebpd\Model\WishlistProduct;
+use Milestone\Teebpd\Mail\ShareWishlist;
 
 class WishListController extends Controller
 {
@@ -21,7 +22,7 @@ class WishListController extends Controller
         if($request->get('create-wishlist') === 'Add WishList'){
             $visitor = (new VisitorController)->getCurrentVisitor();
             if(!$visitor){ session()->flash('error','No visitor defined to create a wish list'); return back(); }
-            $visitor->Wishlists()->save((new Wishlist)->forceFill($request->only(['name','description'])))->Vendor()->save(new VendorWishlist);
+            $visitor->Wishlists()->save((new Wishlist)->forceFill($request->only(['name','description'])));
             session()->flash('info','Wish List created successfully.'); return back();
         }
         return back();
@@ -30,9 +31,9 @@ class WishListController extends Controller
         if($request->wishlist == ""){ session()->flash('error','No wish list selected or created'); return back(); }
         $visitor = (new VisitorController)->getCurrentVisitor();
         if(!$visitor){ session()->flash('error','No visitor defined to create a wish list'); return back(); }
-        $wishlist_id = ($request->wishlist == "-1") ? $visitor->Wishlists()->save((new Wishlist)->forceFill($request->only(['name','description'])))->Vendor()->save(new VendorWishlist)->wishlist : $request->wishlist;
+        $wishlist_id = ($request->wishlist == "-1") ? $visitor->Wishlists()->save((new Wishlist)->forceFill($request->only(['name','description'])))->id : $request->wishlist;
         $wishlist = WishList::find($wishlist_id);
-        if($request->product) $wishlist->Items()->save((new WishlistProduct)->forceFill(['product' => $request->product, 'added_by' => $visitor->id, 'added_on' => date('Y-m-d H:i:s')]));
+        if($request->product && !$wishlist->Items->where('product',$request->product)->count()) $wishlist->Items()->save((new WishlistProduct)->forceFill(['product' => $request->product, 'added_by' => $visitor->id, 'added_on' => date('Y-m-d H:i:s')]));
         session()->flash('info','Product added to Wish List.');
         return back();
     }
@@ -40,9 +41,16 @@ class WishListController extends Controller
         $visitor = (new VisitorController)->getCurrentVisitor(); if(!$visitor) return redirect()->route('home');//'Wishlist cannot be displayed';
         $WishList = Wishlist::find($id);
         $Author = $WishList->author == $visitor->id;
-        if(!$Author && !$WishList->Visitors->where(['id' => $visitor->id, 'status' => 'Active'])->count()) return 'Wishlist cannot be displayed';
+        if(!$Author && !$WishList->Visitors->filter(function($item)use($visitor){return ($item->id == $visitor->id && $item->pivot->status == 'Active'); })->count()) return 'Wishlist cannot be displayed';
         $WishList = $WishList->load(['Notes.Author','Author','Visitors','Vendor','Items' => function($Q){ $Q->with(['Product' => function($Q){ $Q->with(['Brand','Category','Images']); },'Notes.Author','Added','Removed']); }]);
         return view('teebpd::wishlist_details',compact('WishList','Author','visitor'));
+    }
+    public function delete($id){
+        $visitor = (new VisitorController)->getCurrentVisitor(); if(!$visitor) return redirect()->route('home');//'Wishlist cannot be displayed';
+        $WishList = Wishlist::find($id);
+        if($WishList->author != $visitor->id) return back();
+        $WishList->status = 'Inactive'; $WishList->save();
+        return back();
     }
     public function note(Request $request){
         if(trim($request->note) === "") return back();
@@ -57,9 +65,9 @@ class WishListController extends Controller
         $visitor = (new VisitorController)->getCurrentVisitor(); if(!$visitor) return back();
         $wishlist = $request->wishlist ? Wishlist::find($request->wishlist) : null;
         if(!$wishlist || ($wishlist->author != $visitor->id && !$wishlist->Visitors->where('id',$visitor->id)->count())) return back();
-        $visitor = (new VisitorController)->AddOrGetVisitor($request->email,$request->name);
-        //$visitor->SharedWishlist()->save((new \App\VisitorWishList)->forceFill(['wishList_id' => $wishlist->id]));
-        $visitor->SharedWishlist()->attach($wishlist->id);
+        $share = (new VisitorController)->AddOrGetVisitor($request->email,$request->name);
+        $share->SharedWishlist()->attach($wishlist->id);
+        $this->email($wishlist,$visitor,$share);
         return back();
     }
     public function alter(Request $request){
@@ -85,5 +93,16 @@ class WishListController extends Controller
         $WLP->product_status = $to[$request->from];
         $WLP->save();
         return back();
+    }
+    private function email($wishlist,$sharer,$sharee){
+        $array = ['wishlist' => $wishlist->id, 'visitor' => $sharee->id];
+        $sharecode = base64_encode(json_encode($array));
+        Mail::to($sharee->email)->queue(new ShareWishlist($sharer,$sharee,$sharecode));
+    }
+    public function in($code){
+        $array = json_decode(base64_decode($code),true);
+        $wishlist = $array['wishlist']; $visitor = $array['visitor'];
+        if(!$visitor || !$visitor = Visitor::find($visitor)) return route('home');
+        return redirect()->route('wishlist.detail',$wishlist)->cookie('__teeb_visitor',$visitor->id,30*24*60,'/');
     }
 }
