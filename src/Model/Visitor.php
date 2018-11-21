@@ -8,6 +8,10 @@ class Visitor extends Model
 {
     protected $table = 'visitors';
 
+    protected $dispatchesEvents = [
+        'created' => \Milestone\Teebpd\Event\VisitorCreated::class
+    ];
+
     public function Wishlists(){
         return $this->hasMany(Wishlist::class,'author')->where('status','Active');
     }
