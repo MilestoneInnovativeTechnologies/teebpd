@@ -31,4 +31,8 @@ class Wishlist extends Model
     public function Products(){
         return $this->belongsToMany(Product::class,'wishlist_products', 'wishlist','product')->wherePivot('status','Active')->wherePivot('product_status','Active');
     }
+
+    public function scopeVendorShare($Q){
+        return $Q->whereHas('Vendor',function($Q){ $Q->where('status','Active'); });
+    }
 }
