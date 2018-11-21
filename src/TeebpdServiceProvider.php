@@ -2,7 +2,13 @@
 
 namespace Milestone\Teebpd;
 
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
+
+use Milestone\Teebpd\Event\VisitorCreated;
+use Milestone\Teebpd\Event\WishlistCreated;
+use Milestone\Teebpd\Listener\AddWishlistVendor;
+use Milestone\Teebpd\Listener\CheckAndCreateDefaultWishlist;
 
 class TeebpdServiceProvider extends ServiceProvider
 {
@@ -43,6 +49,9 @@ class TeebpdServiceProvider extends ServiceProvider
 
         $this->publishes($publishDataArray);
         $this->publishes($publishDataArray,'teebpd-update');
+
+        Event::listen(WishlistCreated::class, AddWishlistVendor::class);
+        Event::listen(VisitorCreated::class, CheckAndCreateDefaultWishlist::class);
     }
 
     /**
