@@ -17,7 +17,6 @@ class VisitorController extends Controller
     public function clear(){
         $cclr = null;
         if(request('_clu') && request('_clu') === Cookie::get('__teeb_visitor')){
-            //Cookie::queue(Cookie::make('__teeb_visitor',request('_clu'),-1,'/'));
             $cclr = true; return back()->with(compact('cclr'))->cookie('__teeb_visitor',request('_clu'),-1,'/');
         }
         return back()->with(compact('cclr'));
