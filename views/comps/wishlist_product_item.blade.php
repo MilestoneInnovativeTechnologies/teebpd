@@ -27,7 +27,7 @@
             </div>
             <div class="col-md-9 col-lg-9 col-sm-8 col-xs-12 text-left">
                 <h3 class="entry-title margin-bottom-1">
-                    {{ $Product->Product->name }}
+                    <a href="{{ route('product.detail',['id' => $Product->Product->id]) }}" class="woocommerce-LoopProduct-link">{{ $Product->Product->name }}</a>
                     <form action="{{ route('product.alter') }}" method="post" class="pull-right">@csrf
                         <input type="hidden" name="wishlist" value="{{ $Product->wishlist }}">
                         <input type="hidden" name="product" value="{{ $Product->product }}">
