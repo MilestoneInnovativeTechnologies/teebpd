@@ -9,6 +9,7 @@ class ProductController extends Controller
 {
     public function detail($id){
         $Product = Product::find($id)->load(['Brand','Category','Images']);
-        return view('teebpd::product_details',compact('Product'));
+        $visitor = (new VisitorController)->getCurrentVisitor();
+        return view('teebpd::product_details',compact('Product','visitor'));
     }
 }
