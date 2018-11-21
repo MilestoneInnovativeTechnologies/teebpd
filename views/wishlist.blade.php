@@ -26,6 +26,7 @@
                                     </div>
                                     <div class="store-footer">
                                         <a href="{{ route('wishlist.detail',$wishList->id) }}" class="dokan-btn dokan-btn-theme">View in Detail</a>
+                                        <a href="{{ route('wishlist.delete',$wishList->id) }}" class="dokan-btn dokan-btn-theme pull-right" style="background-color: #e42234">Delete</a>
                                     </div>
                                 </div>
                             </li>
