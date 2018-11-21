@@ -8,6 +8,10 @@ class Wishlist extends Model
 {
     protected $table = 'wishlists';
 
+    protected $dispatchesEvents = [
+        'created' => \Milestone\Teebpd\Event\WishlistCreated::class
+    ];
+
     public function Author(){
         return $this->belongsTo(Visitor::class,'author')->withDefault(['name' => 'Vendor', 'email' => 'no-replay@example.com', 'number' => '971']);
     }
