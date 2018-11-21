@@ -13,6 +13,6 @@ class Visitor extends Model
     }
 
     public function SharedWishlist(){
-        return $this->belongsToMany(Wishlist::class,'visitor_wishlists','visitor','wishlist')->wherePivot('status','Active')->with(['viewed'])->withTimestamps();
+        return $this->belongsToMany(Wishlist::class,'visitor_wishlists','visitor','wishlist')->wherePivot('status','Active')->withPivot(['viewed'])->withTimestamps();
     }
 }
