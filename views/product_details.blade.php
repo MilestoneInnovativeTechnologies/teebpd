@@ -47,22 +47,59 @@ $metas = [ 'no' => 'No','code' => 'Product Code','size' => 'Size','detail2' => '
                                         <h1 itemprop="name" class="product_title entry-title">{{ $Product->name }}</h1>
                                         <!--<p class="price"> <span class="woocommerce-Price-amount amount"> <span class="woocommerce-Price-currencySymbol">&#36;</span> 259.00 </span> </p>-->
                                         <div itemprop="description" class="description"><p>{!! nl2br($Product->description) !!}</p></div>
-                                        <!--<div class="yith-wcwl-add-to-wishlist add-to-wishlist-1060">
-                                            <div class="yith-wcwl-add-button show" style="display:block">
-                                                <a class="add_to_wishlist"> Add to Wishlist</a>
-                                                <img src="http://wpbingosite.com/wordpress/demo_hanata/hanata/wp-content/plugins/yith-woocommerce-wishlist/assets/images/wpspin_light.gif" class="ajax-loading" alt="loading" width="16" height="16" style="visibility:hidden"/>
-                                            </div>
-                                            <div class="yith-wcwl-wishlistaddedbrowse hide" style="display:none;">
-                                                <span class="feedback">Product added!</span>
-                                                <a href="http://wpbingosite.com/wordpress/demo_hanata/hanata/wishlist/" rel="nofollow"> Browse wishlist </a>
-                                            </div>
-                                            <div class="yith-wcwl-wishlistexistsbrowse hide" style="display:none">
-                                                <span class="feedback">The product is already in the wishlist!</span>
-                                                <a href="http://wpbingosite.com/wordpress/demo_hanata/hanata/wishlist/" rel="nofollow"> Browse wishlist </a>
-                                            </div>
-                                            <div style="clear:both"></div>
-                                            <div class="yith-wcwl-wishlistaddresponse"></div>
-                                        </div>-->
+                                        <h3>Add to Wish List</h3>
+                                        @if($visitor)
+                                        <div>
+                                            <form method="post" id="wishlist_entry" action="{{ route('wishlist.add.product') }}" onsubmit="return validateWLEntry()">
+                                                @csrf <input type="hidden" name="product" value="{{ $Product->id }}">
+                                                <select name="wishlist" style="width: 100%; height: 50px; background-color: #e5ae49; color: #F2F2F2" onchange="wlchange(this)">
+                                                    @if($visitor->Wishlists->count() + $visitor->SharedWishlist->count() !== 1)<option value="">Select Wish List</option>@endif
+                                                    @forelse($visitor->Wishlists as $owl) <option value="{{ $owl->id }}" @if($owl->Items->contains('product',$Product->id)) disabled @endif>{{ $owl->name }}@if($owl->Items->contains('product',$Product->id))  - Already in Wish List @endif</option> @empty @endforelse
+                                                    @forelse($visitor->SharedWishlist as $vwl) <option value="{{ $vwl->id }} @if($vwl->Items->contains('product',$Product->id)) disabled @endif">{{ $vwl->name }}@if($vwl->Items->contains('product',$Product->id))  - Already in Wish List @endif</option> @empty @endforelse
+                                                    <option value="-1">Create New Wish List</option>
+                                                </select>
+                                                <div class="create margin-top-5" style="display: none">
+                                                    <small style="visibility: hidden; color: #900b00; display: block;">Please enter a Name</small>
+                                                    <input type="text" name="name" value="" size="40" placeholder="Enter A Name ..." autocomplete="off" class="margin-bottom-1">
+                                                    <input type="text" name="description" value="" size="40" placeholder="Enter Description ..." autocomplete="off" class="margin-bottom-1">
+                                                </div>
+                                                <input type="submit" id="wl_add" style="width: 100%; background-color: #e5ae49; color: #F2F2F2; height: 48px; margin-top: 3px;" value="Add" disabled="disabled">
+                                            </form>
+                                            @push('script')
+                                                <script type="text/javascript">
+                                                    $(function(){ wlchange($('[name="wishlist"]')[0]) });
+                                                    function wlchange(e) {
+                                                        val = e.value; $('#wl_add').prop('disabled',val === "");
+                                                        if(val == "-1") $('.create').slideDown(); else $('.create').slideUp();
+                                                    }
+                                                    function validateWLEntry(){
+                                                        if($('[name="wishlist"]').val() !== "-1") return true;
+                                                        frm = $('#wishlist_entry'); name = $('[name="name"]',frm).val();
+                                                        if(name.trim() == "") { $('small',frm).css('visibility','visible'); return false }
+                                                        $('small',frm).css('visibility','hidden'); return true;
+                                                    }
+                                                </script>
+                                            @endpush
+                                        </div>
+                                        @else
+                                            <p class="entry-date">Enter your details to have access to wish lists</p>
+                                            <form method="post" id="visitor_entry" action="{{ route('store.visitor') }}" onsubmit="return validateVisitorEntry()">@csrf
+                                                <input type="text" name="name" value="" style="width: 90%" placeholder="Enter Your Name ..." autocomplete="off" class="margin-bottom-1">
+                                                <input type="email" name="email" value="" style="width: 90%" placeholder="Enter Your Email ..." autocomplete="off" class="margin-bottom-1">
+                                                <input type="text" name="number" value="" style="width: 90%" placeholder="Enter Your Number ..." autocomplete="off" class="margin-bottom-1">
+                                                <input type="submit" name="set-visitor" value="Submit"><small style="visibility: hidden; color: #900b00; margin-left: 5px">Please fill name and either Mobile or Email</small>
+                                                @push('script')
+                                                    <script type="text/javascript">
+                                                        function validateVisitorEntry(){
+                                                            frm = $('#visitor_entry');
+                                                            email = $('[name="email"]',frm).val(); number = $('[name="number"]',frm).val(); name = $('[name="name"]',frm).val();
+                                                            if((email.trim() == "" && number.trim() == "") || name.trim() == "") { $('small',frm).css('visibility','visible'); return false }
+                                                            $('small',frm).css('visibility','hidden'); return true;
+                                                        }
+                                                    </script>
+                                                @endpush
+                                            </form>
+                                        @endif
                                         <div class="clear"></div>
                                         <div class="product_meta">
                                             @foreach($metas as $meta => $display)
