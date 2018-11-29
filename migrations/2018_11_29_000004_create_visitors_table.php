@@ -14,11 +14,11 @@ class CreateVisitorsTable extends Migration
     public function up()
     {
         Schema::create('visitors', function (Blueprint $table) {
-			$table->increments('id');
-			$table->string('name', 64)->index();
-			$table->string('email', 256)->nullable();
-			$table->string('number', 64)->nullable();
-			$table->timestamps();
+            $table->increments('id');
+            $table->string('name', 64)->index();
+            $table->string('email', 256)->nullable();
+            $table->string('number', 64)->nullable();
+            $table->timestamps();
         });
     }
 

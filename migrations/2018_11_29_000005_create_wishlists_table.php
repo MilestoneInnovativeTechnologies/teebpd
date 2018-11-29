@@ -14,13 +14,13 @@ class CreateWishlistsTable extends Migration
     public function up()
     {
         Schema::create('wishlists', function (Blueprint $table) {
-			$table->increments('id');
-			$table->string('name', 64)->index();
-			$table->string('description', 1024)->nullable();
-			$table->unsignedInteger('author')->nullable()->index();
-			$table->enum('status', ['Active','Inactive'])->default('Active')->index();
-			$table->timestamps();
-			$table->foreign('author')->references('id')->on('visitors')->onUpdate('cascade')->onDelete('set null');
+            $table->increments('id');
+            $table->string('name', 64)->index();
+            $table->string('description', 1024)->nullable();
+            $table->unsignedInteger('author')->nullable()->index();
+            $table->enum('status', ['Active','Inactive'])->default('Active')->index();
+            $table->timestamps();
+            $table->foreign('author')->references('id')->on('visitors')->onUpdate('cascade')->onDelete('set null');
         });
     }
 
