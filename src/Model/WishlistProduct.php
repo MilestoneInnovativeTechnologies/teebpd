@@ -8,6 +8,10 @@ class WishlistProduct extends Model
 {
     protected $table = 'wishlist_products';
 
+    protected $dispatchesEvents = [
+        'created' => \Milestone\Teebpd\Event\WishlistProductAdded::class,
+    ];
+
     public function Wishlist(){
         return $this->belongsTo(Wishlist::class,'wishlist');
     }
