@@ -1,6 +1,7 @@
 @extends('teebpd::layouts.demonstration')
 @php
-$metas = [ 'no' => 'No','code' => 'Product Code','size' => 'Size','detail2' => 'Detail 02','detail3' => 'Detail 03','detail4' => 'Detail 04','detail5' => 'Detail 05' ];
+$metas = ['code' => 'Product Code'];
+$relat = ['Brand' => ['Brand','name'], 'Category' => ['Category','name'], 'Size' => ['Size','name']]
 @endphp
 @section('content')
         <div class="contents-detail single-product">
@@ -102,6 +103,9 @@ $metas = [ 'no' => 'No','code' => 'Product Code','size' => 'Size','detail2' => '
                                         @endif
                                         <div class="clear"></div>
                                         <div class="product_meta">
+                                            @foreach($relat as $display => $RelFld)
+                                            <span class="sku_wrapper">{{ $display }}: <span> {{ $Product->{$RelFld[0]} ? $Product->{$RelFld[0]}->{$RelFld[1]} : '' }}</span></span>
+                                            @endforeach
                                             @foreach($metas as $meta => $display)
                                             <span class="sku_wrapper">{{ $display }}: <span> {{ $Product->$meta }}</span></span>
                                             @endforeach
