@@ -13,4 +13,8 @@ class ProductImage extends Model
 
     public $files = ['image'];
     protected $table = 'product_images';
+
+    public function scopeStatusOnly($Q){
+        return $Q->select('status');
+    }
 }
