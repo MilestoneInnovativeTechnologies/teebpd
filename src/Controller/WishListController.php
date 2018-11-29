@@ -94,7 +94,8 @@ class WishListController extends Controller
         $WLP->save();
         return back();
     }
-    private function email($wishlist,$sharer,$sharee){
+    public function email($wishlist,$sharer,$sharee){
+        if(!$sharee->email) return;
         $array = ['wishlist' => $wishlist->id, 'visitor' => $sharee->id];
         $sharecode = base64_encode(json_encode($array));
         Mail::to($sharee->email)->queue(new ShareWishlist($sharer,$sharee,$sharecode));
