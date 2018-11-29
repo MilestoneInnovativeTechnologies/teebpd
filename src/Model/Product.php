@@ -9,11 +9,19 @@ class Product extends Model
     protected $table = 'products';
 
     public function Brand(){
-        return $this->belongsTo(Brand::class, 'brand');
+        return $this->belongsTo(ItemGroupMaster::class, 'category_02');
     }
 
     public function Category(){
-        return $this->belongsTo(Category::class, 'category');
+        return $this->belongsTo(ItemGroupMaster::class, 'category_01');
+    }
+
+    public function Size(){
+        return $this->belongsTo(ItemGroupMaster::class, 'category_03');
+    }
+
+    public function Color(){
+        return $this->belongsTo(ItemGroupMaster::class, 'category_04');
     }
 
     public function Images(){
