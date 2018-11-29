@@ -4,7 +4,7 @@ namespace Milestone\Teebpd\Seeder;
 
 use Illuminate\Database\Seeder;
 
-class ProductTableSeeder extends Seeder
+class ItemGroupMasterTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,7 @@ class ProductTableSeeder extends Seeder
     {
         $_ = \DB::statement('SELECT @@GLOBAL.foreign_key_checks');
         \DB::statement('set foreign_key_checks = 0');
-        \Milestone\Teebpd\Model\Product::truncate()
+        \Milestone\Teebpd\Model\ItemGroupMaster::truncate()
         ;
         \DB::statement('set foreign_key_checks = ' . $_);
     }

@@ -13,6 +13,11 @@ class ResourceFormFieldAttrTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $_ = \DB::statement('SELECT @@GLOBAL.foreign_key_checks');
+        \DB::statement('set foreign_key_checks = 0');
+        \Milestone\Appframe\Model\ResourceFormFieldAttr::query()
+            ->create([	'id' => '501', 	'form_field' => '505', 	'name' => 'inline', 	'value' => '4', 												])
+        ;
+        \DB::statement('set foreign_key_checks = ' . $_);
     }
 }
