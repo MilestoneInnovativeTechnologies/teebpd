@@ -16,8 +16,8 @@ class ResourceDataRelationTableSeeder extends Seeder
         $_ = \DB::statement('SELECT @@GLOBAL.foreign_key_checks');
         \DB::statement('set foreign_key_checks = 0');
         \Milestone\Appframe\Model\ResourceDataRelation::query()
-            ->create([	'id' => '501', 	'resource_data' => '501', 	'relation' => '511', 													])
-            ->create([	'id' => '502', 	'resource_data' => '501', 	'relation' => '512', 													])
+            ->create([	'id' => '501', 	'resource_data' => '501', 	'relation' => '511', 	'nest_relation1' => '518', 												])
+            ->create([	'id' => '502', 	'resource_data' => '501', 	'relation' => '512', 	'nest_relation1' => '518', 												])
             ->create([	'id' => '503', 	'resource_data' => '503', 	'relation' => '513', 													])
             ->create([	'id' => '504', 	'resource_data' => '503', 	'relation' => '514', 													])
             ->create([	'id' => '505', 	'resource_data' => '503', 	'relation' => '515', 													])
