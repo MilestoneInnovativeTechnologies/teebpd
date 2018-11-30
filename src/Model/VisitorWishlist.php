@@ -9,7 +9,8 @@ class VisitorWishlist extends Model
     protected $table = 'visitor_wishlists';
 
     protected $dispatchesEvents = [
-        'created' => \Milestone\Teebpd\Event\NewWishlistShare::class
+        'created' => \Milestone\Teebpd\Event\NewWishlistShare::class,
+        'saving' => \Milestone\Teebpd\Event\SavingWishlistVisitor::class,
     ];
 
     public function Wishlist(){
