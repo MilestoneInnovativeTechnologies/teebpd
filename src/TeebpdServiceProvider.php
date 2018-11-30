@@ -5,12 +5,14 @@ namespace Milestone\Teebpd;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
+use Milestone\Teebpd\Event\SavingWishlistVisitor;
 use Milestone\Teebpd\Event\VisitorCreated;
 use Milestone\Teebpd\Event\WishlistCreated;
 use Milestone\Teebpd\Event\NewWishlistShare;
 use Milestone\Teebpd\Event\WishlistProductAdded;
 use Milestone\Teebpd\Listener\AddWishlistVendor;
 use Milestone\Teebpd\Listener\CheckAndCreateDefaultWishlist;
+use Milestone\Teebpd\Listener\PreventWishlistVisitorIfAlreadyIn;
 use Milestone\Teebpd\Listener\SendWishlistShareEmail;
 use Milestone\Teebpd\Listener\SendMailForFirstProduct;
 
@@ -58,6 +60,7 @@ class TeebpdServiceProvider extends ServiceProvider
         Event::listen(VisitorCreated::class, CheckAndCreateDefaultWishlist::class);
         Event::listen(NewWishlistShare::class, SendWishlistShareEmail::class);
         Event::listen(WishlistProductAdded::class, SendMailForFirstProduct::class);
+        Event::listen(SavingWishlistVisitor::class, PreventWishlistVisitorIfAlreadyIn::class);
     }
 
     /**
