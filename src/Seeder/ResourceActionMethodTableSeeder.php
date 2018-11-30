@@ -38,7 +38,7 @@ class ResourceActionMethodTableSeeder extends Seeder
             ->create([	'id' => '520', 	'resource_action' => '520', 	'type' => 'ListRelation', 		'idn1' => '515', 	'idn2' => '506', 										])
             ->create([	'id' => '521', 	'resource_action' => '521', 	'type' => 'ListRelation', 		'idn1' => '517', 	'idn2' => '511', 										])
             ->create([	'id' => '522', 	'resource_action' => '522', 	'type' => 'Data', 		'idn1' => '501', 											])
-            ->create([	'id' => '523', 	'resource_action' => '523', 	'type' => 'ListRelation', 		'idn1' => '525', 	'idn2' => '509', 										])
+            ->create([	'id' => '523', 	'resource_action' => '523', 	'type' => 'ListRelation', 		'idn1' => '516', 	'idn2' => '509', 										])
             ->create([	'id' => '524', 	'resource_action' => '524', 	'type' => 'ManageRelation', 		'idn1' => '518', 	'idn2' => '505', 										])
             ->create([	'id' => '525', 	'resource_action' => '525', 	'type' => 'AddRelation', 		'idn1' => '528', 	'idn2' => '506', 										])
             ->create([	'id' => '526', 	'resource_action' => '526', 	'type' => 'Data', 		'idn1' => '503', 											])
