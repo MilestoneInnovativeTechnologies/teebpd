@@ -18,7 +18,7 @@ class ResourceDataViewSectionTableSeeder extends Seeder
         \Milestone\Appframe\Model\ResourceDataViewSection::query()
             ->create([	'id' => '501', 	'resource_data' => '501', 		'title_field' => 'name', 		'colspan' => '12', 										])
             ->create([	'id' => '502', 	'resource_data' => '501', 	'title' => 'Wish Lists', 		'relation' => '511', 	'colspan' => '6', 										])
-            ->create([	'id' => '503', 	'resource_data' => '510', 	'title' => 'Shared Wishlists', 		'relation' => '512', 	'colspan' => '6', 										])
+            ->create([	'id' => '503', 	'resource_data' => '501', 	'title' => 'Shared Wishlists', 		'relation' => '512', 	'colspan' => '6', 										])
             ->create([	'id' => '504', 	'resource_data' => '503', 		'title_field' => 'name', 		'colspan' => '12', 										])
             ->create([	'id' => '505', 	'resource_data' => '503', 	'title' => 'Sharing With', 		'relation' => '515', 	'colspan' => '12', 										])
             ->create([	'id' => '506', 	'resource_data' => '503', 	'title' => 'Products', 		'relation' => '517', 	'colspan' => '12', 										])
