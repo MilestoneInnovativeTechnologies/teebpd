@@ -6,7 +6,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 use Milestone\Teebpd\Event\SavingWishlistVisitor;
-use Milestone\Teebpd\Model\VisitorWishlist;
 
 class PreventWishlistVisitorIfAlreadyIn
 {
