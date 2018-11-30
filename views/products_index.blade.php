@@ -10,7 +10,7 @@
                 $Q->orWhere($search,'like',$like);
         });
     }
-    $Products = $Products->paginate();
+    $Products = $Products->paginate(16);
 @endphp
 
 @push('script') <script type="text/javascript"> var _Products = new Object({}); </script> @endpush
