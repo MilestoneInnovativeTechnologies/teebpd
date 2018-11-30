@@ -17,7 +17,7 @@ class WishlistProduct extends Model
     }
 
     public function Added(){
-        return $this->belongsTo(Visitor::class,'added_by');
+        return $this->belongsTo(Visitor::class,'added_by')->withDefault(['name' => 'Vendor', 'email' => 'no-replay@example.com', 'number' => '971']);
     }
 
     public function Removed(){
