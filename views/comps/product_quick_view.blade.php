@@ -17,8 +17,8 @@ $visitor = (new Milestone\Teebpd\Controller\VisitorController)->getCurrentVisito
                     <div class="content_product_detail entry-summary">
                         <h1 itemprop="name" class="product_title entry-title"></h1>
                         <div itemprop="description" class="product_description description"><p></p></div>
+                        <div class="meta"><span><b>Brand:</b> </span><span class="product_brand"></span></div>
                         <div class="meta"><span><b>Category:</b> </span><span class="product_category"></span></div>
-                        <div class="meta"><span><b>brand:</b> </span><span class="product_brand"></span></div>
                         <!--<div class="price"></div>-->
                         <h3>Add to Wish List</h3>
                         @if($visitor)
