@@ -1,7 +1,8 @@
 @extends('teebpd::layouts.demonstration')
 @php
 $metas = ['code' => 'Product Code'];
-$relat = ['Brand' => ['Brand','name'], 'Category' => ['Category','name'], 'Size' => ['Size','name']]
+$relat = ['Brand' => ['Brand','name'], 'Category' => ['Category','name'], 'Size' => ['Size','name']];
+$details = ['Brand' => ['Brand','name'], "Product" => "name", "Category" => ['Category','name'], "Code" => "code", "Reference" => "", "Re-Order" => "", "Rack" => "", "Price" => ""];
 @endphp
 @section('content')
         <div class="contents-detail single-product">
@@ -45,9 +46,20 @@ $relat = ['Brand' => ['Brand','name'], 'Category' => ['Category','name'], 'Size'
                                 </div>
                                 <div class="bwp-single-info col-md-6 col-sm-12 col-xs-12 ">
                                     <div class="summary entry-summary">
-                                        <h1 itemprop="name" class="product_title entry-title">{{ $Product->name }}</h1>
+                                        <div class="product_meta">
+                                            @foreach($details as $display => $value)
+                                                <span class="sku_wrapper">{{ $display }}:
+                                                    @if(is_array($value))
+                                                        <span> {{ ($value[0] && $Product->{$value[0]}) ? $Product->{$value[0]}->{$value[1]} : '' }}</span>
+                                                    @else
+                                                        <span> {{ $value ? $Product->$value : '' }}</span>
+                                                    @endif
+                                                </span>
+                                            @endforeach
+                                        </div>
+                                        <!--<h1 itemprop="name" class="product_title entry-title">{{ $Product->name }}</h1>-->
                                         <!--<p class="price"> <span class="woocommerce-Price-amount amount"> <span class="woocommerce-Price-currencySymbol">&#36;</span> 259.00 </span> </p>-->
-                                        <div itemprop="description" class="description"><p>{!! nl2br($Product->description) !!}</p></div>
+                                        <!--<div itemprop="description" class="description"><p>{!! nl2br($Product->description) !!}</p></div>-->
                                         <h3>Add to Wish List</h3>
                                         @if($visitor)
                                         <div>
@@ -101,15 +113,15 @@ $relat = ['Brand' => ['Brand','name'], 'Category' => ['Category','name'], 'Size'
                                                 @endpush
                                             </form>
                                         @endif
-                                        <div class="clear"></div>
-                                        <div class="product_meta">
+                                        <!--<div class="clear"></div>-->
+                                        <!--<div class="product_meta">
                                             @foreach($relat as $display => $RelFld)
                                             <span class="sku_wrapper">{{ $display }}: <span> {{ $Product->{$RelFld[0]} ? $Product->{$RelFld[0]}->{$RelFld[1]} : '' }}</span></span>
                                             @endforeach
                                             @foreach($metas as $meta => $display)
                                             <span class="sku_wrapper">{{ $display }}: <span> {{ $Product->$meta }}</span></span>
                                             @endforeach
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
