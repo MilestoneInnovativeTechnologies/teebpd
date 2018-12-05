@@ -1,7 +1,7 @@
 @extends('teebpd::layouts.demonstration')
 
 @php
-    $Products = Milestone\Teebpd\Model\Product::with(['Images','Category','Brand'])->where(['type' => 'Public','status' => 'Active']);
+    $Products = Milestone\Teebpd\Model\Product::with(['Images','Category','Brand'])->where(['type' => 'Public','status' => 'Active'])->whereHas('Category',function($Q){ $Q->where('list','Yes'); })->whereHas('Brand',function($Q){ $Q->where('list','Yes'); });
     if(!empty(request('brand'))){
         $Products->whereHas('Brand',function($Q){ $Q->where('id',request('brand')); });
     }

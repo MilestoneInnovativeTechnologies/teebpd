@@ -4,7 +4,7 @@
         @if(request('brand')) <a href="?brand=" class="btn btn-xs pull-right margin-top-6">clear</a> @endif
         <style type="text/css"> ul.product-categories > li:nth-child(n+10) { display:none; } </style>
         <script type="text/javascript">
-                @php $Brands = \Milestone\Teebpd\Model\ItemGroupMaster::brand()->withCount('BrandProducts')->orderBy('brand_products_count','desc')->get(); @endphp
+                @php $Brands = \Milestone\Teebpd\Model\ItemGroupMaster::brand()->web()->whereHas('BrandProducts.Category',function($Q){ $Q->where('list','Yes'); })->withCount('BrandProducts')->orderBy('brand_products_count','desc')->get(); @endphp
             var __brands = {!! $Brands->map(function($brnd){ return array_values($brnd->only(['id','name','brand_products_count'])); }) !!}, __tm = 0;
             $(function(){ $('#bfinp').trigger('onkeyup') });
             function flbnd(val){ clearTimeout(__tm); __tm = setTimeout(flbnd2,250,val); }
