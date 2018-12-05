@@ -28,6 +28,10 @@ class ItemGroupMaster extends Model
         return $Q->where('list','Yes');
     }
 
+    public function scopeListOnly($Q){
+        return $Q->select('list');
+    }
+
 	public function CategoryProducts(){
 		return $this->hasMany(Product::class,'category_01');
 	}
