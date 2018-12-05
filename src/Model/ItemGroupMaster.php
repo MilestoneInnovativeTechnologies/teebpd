@@ -9,15 +9,15 @@ class ItemGroupMaster extends Model
     protected $table = 'item_group_master';
 
     public function scopeCategory($Q){
-        return $Q->where('catecode','1');
+        return $Q->where('catecode','01');
     }
 
     public function scopeBrand($Q){
-        return $Q->where('catecode','2');
+        return $Q->where('catecode','02');
     }
 
     public function scopeSize($Q){
-        return $Q->where('catecode','3');
+        return $Q->where('catecode','03');
     }
 
     public function scopeColor($Q){
