@@ -21,9 +21,13 @@ class ItemGroupMaster extends Model
     }
 
     public function scopeColor($Q){
-        return $Q->where('catecode','4');
+        return $Q->where('catecode','04');
     }
-	
+
+    public function scopeWeb($Q){
+        return $Q->where('list','Yes');
+    }
+
 	public function CategoryProducts(){
 		return $this->hasMany(Product::class,'category_01');
 	}
