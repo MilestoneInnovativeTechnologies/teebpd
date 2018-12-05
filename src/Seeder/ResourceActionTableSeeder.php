@@ -44,6 +44,7 @@ class ResourceActionTableSeeder extends Seeder
             ->create([	'id' => '526', 	'resource' => '305', 	'name' => 'WishlistDetailsAction', 	'description' => 'Action to view details of a wishlist', 	'title' => 'Details', 											])
             ->create([	'id' => '527', 	'resource' => '305', 	'name' => 'UpdateWishlistDetailsAction', 	'description' => 'Action to update wish list details', 	'title' => 'Update', 											])
             ->create([	'id' => '528', 	'resource' => '305', 	'name' => 'AddWishlistNoteAction', 	'description' => 'Action to add wishlist message', 	'title' => 'Add Note', 											])
+            ->create([	'id' => '529', 	'resource' => '301', 	'name' => 'AlterWebListAction', 	'description' => 'Action to alter web listing of a item group', 	'title' => 'Alter Web Listing', 											])
         ;
         \DB::statement('set foreign_key_checks = ' . $_);
     }

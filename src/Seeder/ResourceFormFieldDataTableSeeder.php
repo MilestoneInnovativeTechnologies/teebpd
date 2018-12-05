@@ -33,6 +33,7 @@ class ResourceFormFieldDataTableSeeder extends Seeder
             ->create([	'id' => '515', 	'form_field' => '515', 	'attribute' => 'visitor', 													])
             ->create([	'id' => '516', 	'form_field' => '516', 	'attribute' => 'wishlist', 													])
             ->create([	'id' => '517', 	'form_field' => '517', 	'attribute' => 'note', 													])
+            ->create([	'id' => '518', 	'form_field' => '518', 	'attribute' => 'list', 													])
         ;
         \DB::statement('set foreign_key_checks = ' . $_);
     }

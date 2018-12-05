@@ -23,6 +23,7 @@ class ResourceFormTableSeeder extends Seeder
             ->create([	'id' => '505', 	'resource' => '305', 	'name' => 'UpdateWishlistForm', 	'description' => 'Form used to update wishlist details', 	'title' => 'Update Wish List Details', 	'action_text' => 'Update', 										])
             ->create([	'id' => '506', 	'resource' => '307', 	'name' => 'AddWishlistVisitorForm', 	'description' => 'Share wishlist with a visitor', 	'title' => 'Add Visitor', 	'action_text' => 'Add Visitor', 										])
             ->create([	'id' => '507', 	'resource' => '308', 	'name' => 'AddWishlistNote', 	'description' => 'Add a message to wishlist', 	'title' => 'New Message', 	'action_text' => 'Add Message', 										])
+            ->create([	'id' => '508', 	'resource' => '301', 	'name' => 'ChangeItemGroupWebListForm', 	'description' => 'Change the item group web listing state', 	'title' => 'Change Listing property', 	'action_text' => 'Update', 										])
         ;
         \DB::statement('set foreign_key_checks = ' . $_);
     }
