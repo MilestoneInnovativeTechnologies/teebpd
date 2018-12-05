@@ -68,7 +68,7 @@ class itemmasterController extends Controller
     }
 
     private function getCategoryCode($catecode,$gcode){
-        $refno = implode("/",[$catecode,$gcode.'sd']);
+        $refno = implode("/",[$catecode,$gcode]);
         $record = ItemGroupMaster::where(compact('refno'))->first();
         return ($record) ? $record->id : null;
     }
