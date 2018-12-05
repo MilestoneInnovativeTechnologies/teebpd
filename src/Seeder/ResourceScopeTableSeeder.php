@@ -22,6 +22,7 @@ class ResourceScopeTableSeeder extends Seeder
             ->create([	'id' => '504', 	'resource' => '301', 	'name' => 'ItemGroupColor', 	'description' => 'Color from Item Group', 	'method' => 'color', 											])
             ->create([	'id' => '505', 	'resource' => '305', 	'name' => 'WishlistVendorActive', 	'description' => 'Wishlists which are shared with vendor', 	'method' => 'vendorShare', 											])
             ->create([	'id' => '506', 	'resource' => '303', 	'name' => 'ImageStatus', 	'description' => 'Get image status', 	'method' => 'statusOnly', 											])
+            ->create([	'id' => '507', 	'resource' => '301', 	'name' => 'ItemGroupWeb', 	'description' => 'Item group which are listable on web', 	'method' => 'web', 											])
         ;
         \DB::statement('set foreign_key_checks = ' . $_);
     }
