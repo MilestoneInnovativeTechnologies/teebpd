@@ -11,10 +11,14 @@ class InteractController extends Controller
 
     public function index(Request $request){
         ini_set('max_execution_time',300);
-        $Content = $this->getContent(file_get_contents($request->file('file')));
-        $this->setProperties($Content['table']);
-        $this->pk = $Content['primary_key'];
-        return $this->run($Content['mode'],$Content['data']);
+        $Return = [];
+        $Contents = $this->getContent(file_get_contents($request->file('file')));
+        foreach((array) $Contents as $Content){
+            $this->setProperties($Content['table']);
+            $this->pk = $Content['primary_key'];
+            $Return[] = $this->run($Content['mode'],$Content['data']);
+        }
+        return $Return;
     }
 
     private function getContent($content){
