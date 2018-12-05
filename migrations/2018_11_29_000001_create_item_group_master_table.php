@@ -19,6 +19,7 @@ class CreateItemGroupMasterTable extends Migration
             $table->string('catecode', 16)->nullable();
             $table->string('gcode', 16)->nullable();
             $table->string('name', 64)->index();
+            $table->enum('list', ['Yes','No'])->default('Yes');
             $table->enum('type', ['Public','Private'])->default('Public')->index();
             $table->enum('status', ['Active','Inactive'])->default('Active')->index();
             $table->timestamps();
