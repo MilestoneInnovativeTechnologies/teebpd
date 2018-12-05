@@ -135,14 +135,19 @@ $visitor = (new Milestone\Teebpd\Controller\VisitorController)->getCurrentVisito
             $('.product_add_to_wishlist,.yith-wcwl-wishlistaddedbrowse,.yith-wcwl-wishlistexistsbrowse,.yith-wcwl-wishlistaddresponse').attr('data-product_id',product.id);
             $('[name="product"]').val(product.id);
             var qvs = $('.quickview-slick').empty();
-            $.each(product.images,function(k,image){
-                var img = image.__upload_file_details;
-                qvs.append($('<div class="item">').html($('<img>').attr({ 'class':'attachment-shop_single size-shop_single wp-post-image','src':img.image.url,'style':'height:"390px"' })))
-            });
+            if(product.images && product.images.length){
+                $.each(product.images,function(k,image){
+                    var img = image.__upload_file_details;
+                    qvs.append($('<div class="item">').html($('<img>').attr({ 'class':'attachment-shop_single size-shop_single wp-post-image','src':img.image.url })))
+                });
+            } else {
+                var img = '/teebpd/images/product/images/NO-IMAGE-AVAILABLE.jpg';
+                qvs.append($('<div class="item">').html($('<img>').attr({ 'class':'attachment-shop_single size-shop_single wp-post-image','src':img })))
+            }
             $('[name="wishlist"] option').each(function(i,option){
                 var prds = $(option).attr('data-products');
                 $(option).text($(option).text().replace(' - Already in this Wish List',''));
-                if(prds && prds.indexOf(product.id) > -1) $(option).text($(option).text() + ' - Already in this Wish List'); })
+                if(prds && prds.indexOf(product.id) > -1) $(option).text($(option).text() + ' - Already in this Wish List'); });
             $('[name="wishlist"]').trigger('change')
         }
 

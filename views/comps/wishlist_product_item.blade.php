@@ -6,23 +6,19 @@
                 <div class="products-thumb">
                     <div class="product-thumb-hover" style="height: 240px;">
                         <a href="{{ route('product.detail',['id' => $Product->Product->id]) }}" class="woocommerce-LoopProduct-link">
-                            @forelse($Product->Product->Images as $K => $Image)
-                                @if($K === 0)
-                                    <img width="470" height="594" src="{{ $Image->__upload_file_details['image']['url'] }}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
-                                @elseif($K === 1)
-                                    <img width="470" height="594" src="{{ $Image->__upload_file_details['image']['url'] }}" class="hover-image back" alt="">
+                            @if($Product->Product->Images && $Product->Product->Images->isNotEmpty())
+                                <img width="470" height="594" src="{{ $Product->Product->Images[0]->__upload_file_details['image']['url'] }}" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                @if($Product->Product->Images->count()>1)
+                                    <img width="470" height="594" src="{{ $Product->Product->Images[1]->__upload_file_details['image']['url'] }}" class="hover-image back" alt="">
+                                @else
+                                    <img width="470" height="594" src="{{ $Product->Product->Images[0]->__upload_file_details['image']['url'] }}" class="hover-image back" alt="">
                                 @endif
-                            @empty
-                                <img>
-                            @endforelse
+                            @else
+                                <img width="470" height="594" src="/teebpd/images/product/images/NO-IMAGE-AVAILABLE.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                <img width="470" height="594" src="/teebpd/images/product/images/NO-IMAGE-AVAILABLE.jpg" class="hover-image back" alt="">
+                            @endif
                         </a>
                     </div>
-                    <!--<div class="product-button">
-                        <span class="product-quickview" style="border:1px solid #e5ae49; border-right: none">
-                            <a href="#" data-product_id="{{ $Product->product }}" class="quickview quickview-button quickview-{{ $Product->product }}">Quick View <i class="icon_search"></i></a>
-                        </span>
-                        <div class="clear"></div>
-                    </div>-->
                 </div>
             </div>
             <div class="col-md-9 col-lg-9 col-sm-8 col-xs-12 text-left">

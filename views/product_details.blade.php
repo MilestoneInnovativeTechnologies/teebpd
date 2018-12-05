@@ -24,7 +24,11 @@ $details = ['Brand' => ['Brand','name'], "Product" => "name", "Category" => ['Ca
                                                                 </a>
                                                             </div>
                                                         @empty
-
+                                                            <div class="img-thumbnail">
+                                                                <a href="/teebpd/images/product/images/NO-IMAGE-AVAILABLE.jpg" data-image="/teebpd/images/product/images/NO-IMAGE-AVAILABLE.jpg" class="img-thumbnail first active" title="">
+                                                                    <img width="470" height="594" src="/teebpd/images/product/images/NO-IMAGE-AVAILABLE.jpg" class="attachment-shop_catalog size-shop_catalog" alt="{{ $Product->name }}" title="{{ $Product->name }}" data-zoom-image="/teebpd/images/product/images/NO-IMAGE-AVAILABLE.jpg"/>
+                                                                </a>
+                                                            </div>
                                                         @endforelse
                                                     </div>
                                                 </div>
@@ -35,6 +39,12 @@ $details = ['Brand' => ['Brand','name'], "Product" => "name", "Category" => ['Ca
                                                             <div data-thumb="{{ $url }}" class="woocommerce-product-gallery__image">
                                                                 <a href="{{ $url }}">
                                                                     <img width="720" height="909" src="{{ $url }}" class="attachment-shop_single size-shop_single wp-post-image" alt="" id="image" title="" data-src="{{ $url }}" data-large_image="{{ $url }}" data-large_image_width="950" data-large_image_height="1200"/>
+                                                                </a>
+                                                            </div>
+                                                            @else
+                                                            <div data-thumb="/teebpd/images/product/images/NO-IMAGE-AVAILABLE.jpg" class="woocommerce-product-gallery__image">
+                                                                <a href="/teebpd/images/product/images/NO-IMAGE-AVAILABLE.jpg">
+                                                                    <img width="720" height="909" src="/teebpd/images/product/images/NO-IMAGE-AVAILABLE.jpg" class="attachment-shop_single size-shop_single wp-post-image" alt="" id="image" title="" data-src="/teebpd/images/product/images/NO-IMAGE-AVAILABLE.jpg" data-large_image="/teebpd/images/product/images/NO-IMAGE-AVAILABLE.jpg" data-large_image_width="950" data-large_image_height="1200"/>
                                                                 </a>
                                                             </div>
                                                         @endif

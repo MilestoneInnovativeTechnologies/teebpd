@@ -2,6 +2,9 @@
 
 @php
     $Products = Milestone\Teebpd\Model\Product::with(['Images','Category','Brand'])->where(['type' => 'Public','status' => 'Active']);
+    if(!empty(request('brand'))){
+        $Products->whereHas('Brand',function($Q){ $Q->where('id',request('brand')); });
+    }
     if(!empty(request('s'))){
         $like = "%" . request('s') . "%";
         $Products->where(function($Q)use($like){
@@ -10,7 +13,7 @@
                 $Q->orWhere($search,'like',$like);
         });
     }
-    $Products = $Products->paginate(16);
+    $Products = $Products->paginate(request('per_page') ?: 16);
 @endphp
 
 @push('script') <script type="text/javascript"> var _Products = new Object({}); </script> @endpush
@@ -18,13 +21,19 @@
 
 @section('content')
     <div class="main-archive-product row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="bwp-top-bar top clearfix">
+        <div class="bwp-sidebar sidebar-product col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            @component('teebpd::comps.sidebar') @endcomponent
+        </div>
+        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            <div class="bwp-top-bar bottom clearfix margin-bottom-20">
                 @if(!empty(request('s'))) <div class="pull-left" style="line-height: 25px; padding-right: 20px"> &lt;&lt; <a href="?s=">Clear Search</a></div>  @endif
-                <div class="woocommerce-result-count hidden-sm hidden-xs pull-left">Showing {{ $Products->firstItem() }}–{{ $Products->lastItem() }} of {{ $Products->total() }} item(s)</div>
-                <nav class="woocommerce-pagination pull-right">
-                    @if(empty(request('s'))) {{ $Products->links() }} @else {{ $Products->appends(['s' => request('s')])->links() }} @endif
+                <nav class="woocommerce-pagination" style="padding-left: 5% !important;">
+                    @php if(!empty(request('s'))) $Products->appends(['s' => request('s')]); if(!empty(request('brand'))) $Products->appends(['brand' => request('brand'), '_bn' => request('_bn')]); @endphp
+                    {{ $Products->links() }}
                 </nav>
+                <div class="woocommerce-result-count hidden-sm hidden-xs pull-left" style="padding-right: 5% !important;">
+                    Showing {{ $Products->firstItem() }}–{{ $Products->lastItem() }} of {{ $Products->total() }} item(s)
+                </div>
             </div>
             @if(  $Products->isEmpty())
                 <p class="woocommerce-info">No products were found.</p>

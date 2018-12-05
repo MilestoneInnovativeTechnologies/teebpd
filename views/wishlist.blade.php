@@ -14,7 +14,7 @@
                             <li class="dokan-single-seller woocommerce coloum-3">
                                 <div class="store-wrapper">
                                     <div class="store-content">
-                                        <div class="store-info" style="@if($wishList->Products->isNotEmpty() && $wishList->Products[0]->Images->isNotEmpty()) background-image: url('{{ $wishList->Products[0]->Images[0]->__upload_file_details['image']['url'] }}'); @endif">
+                                        <div class="store-info" style="@if($wishList->Products->isNotEmpty() && $wishList->Products[0]->Images->isNotEmpty()) background-image: url('{{ $wishList->Products[0]->Images[0]->__upload_file_details['image']['url'] }}'); @else background-image: url('/teebpd/images/product/images/NO-IMAGE-AVAILABLE.jpg'); @endif">
                                             <div class="store-data-container">
                                                 <div class="featured-favourite"></div>
                                                 <div class="store-data">
