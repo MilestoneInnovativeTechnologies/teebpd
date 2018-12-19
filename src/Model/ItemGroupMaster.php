@@ -41,10 +41,10 @@ class ItemGroupMaster extends Model
 	}
 
 	public function SizeProducts(){
-		return $this->hasMany(Product::class,'category_03');
+		return $this->hasMany(Product::class,'category_04');
 	}
 
 	public function ColorProducts(){
-		return $this->hasMany(Product::class,'category_04');
+		return $this->hasMany(Product::class,'category_03');
 	}
 }

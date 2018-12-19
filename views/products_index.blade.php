@@ -1,7 +1,7 @@
 @extends('teebpd::layouts.demonstration')
 
 @php
-    $Products = Milestone\Teebpd\Model\Product::with(['Images','Category','Brand'])->where(['type' => 'Public','status' => 'Active'])->whereHas('Category',function($Q){ $Q->where('list','Yes'); })->whereHas('Brand',function($Q){ $Q->where('list','Yes'); });
+    $Products = Milestone\Teebpd\Model\Product::with(['Images','Category','Brand','Color'])->where(['type' => 'Public','status' => 'Active'])->whereHas('Category',function($Q){ $Q->where('list','Yes'); })->whereHas('Brand',function($Q){ $Q->where('list','Yes'); });
     //dd($Products->get()->pluck('Brand.name','id')->toArray());
     if(!empty(request('brand'))){
         $Products->whereHas('Brand',function($Q){ $Q->where('id',request('brand')); });
@@ -9,7 +9,7 @@
     if(!empty(request('s'))){
         $like = "%" . request('s') . "%";
         $Products->where(function($Q)use($like){
-            $searchs = ['name','description'];
+            $searchs = ['description'];
             foreach($searchs as $search)
                 $Q->orWhere($search,'like',$like);
         });

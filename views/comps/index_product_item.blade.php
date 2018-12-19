@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="products-content">
-            <h3 class="product-title"><a href="{{ route('product.detail',['id' => $Product->id]) }}">{{ $Product->name }}</a></h3>
+            <h3 class="product-title"><a href="{{ route('product.detail',['id' => $Product->id]) }}">{{ $Product->Color ? $Product->Color->name : $Product->name }}</a></h3>
         </div>
     </div>
 </li>

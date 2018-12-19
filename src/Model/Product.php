@@ -17,11 +17,11 @@ class Product extends Model
     }
 
     public function Size(){
-        return $this->belongsTo(ItemGroupMaster::class, 'category_03');
+        return $this->belongsTo(ItemGroupMaster::class, 'category_04');
     }
 
     public function Color(){
-        return $this->belongsTo(ItemGroupMaster::class, 'category_04');
+        return $this->belongsTo(ItemGroupMaster::class, 'category_03');
     }
 
     public function Images(){

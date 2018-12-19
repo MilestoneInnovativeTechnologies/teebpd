@@ -128,7 +128,7 @@ $visitor = (new Milestone\Teebpd\Controller\VisitorController)->getCurrentVisito
         }
 
         function _populate_quickview_data(product) {
-            $('.product_title.entry-title').text(product.name);
+            $('.product_title.entry-title').text(product.color ? product.color.name : '');
             $('.product_category').text(product.category ? product.category.name : '');
             $('.product_brand').text(product.brand ? product.brand.name : '');
             $('.product_description p').html(product.description);
